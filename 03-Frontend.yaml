@@ -1,7 +1,7 @@
 - name: configuring frontend
   hosts: frontend
+  become: yes
   vars:
-
   tasks:
   - name: installing nginx
     ansible.builtin.dnf:
