@@ -34,31 +34,31 @@
       src: /tmp/backend.zip
       dest: /app
   
-    - name: go to app dir
-      ansible.builtin.command: cd /app
+  - name: go to app dir
+    ansible.builtin.command: cd /app
 
-    - name: installing npm dependencies
+  - name: installing npm dependencies
       ansible.builtin.command: npm install
 
-    - name: copying backend.service to remote
-      ansible.builtin.copy:
-        src: /home/ec2-user/05-expense-ansible/backend.service
-        dest: /etc/systemd/system/backend.service
+  - name: copying backend.service to remote
+    ansible.builtin.copy:
+      src: /home/ec2-user/05-expense-ansible/backend.service
+      dest: /etc/systemd/system/backend.service
     
-    - name: installing mysql
-      ansible.builtin.dnf:
-        name: mysql
-        state: installed
+  - name: installing mysql
+    ansible.builtin.dnf:
+      name: mysql
+      state: installed
 
-    - name: loading mysql schema
-      community.mysql.mysql_db:
-        state: import
-        name: all
-        target: /app/schema/backend.sql
+  - name: loading mysql schema
+    community.mysql.mysql_db:
+      state: import
+      name: all
+      target: /app/schema/backend.sql
 
-    - name: dameon start and enable
-      ansible.builtin.systemd_service:
-        name: backend
-        state: started
-        daemon_reload: true
-        enabled: true
+  - name: dameon start and enable
+    ansible.builtin.systemd_service:
+      name: backend
+      state: started
+      daemon_reload: true
+      enabled: true
