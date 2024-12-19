@@ -35,7 +35,7 @@
       dest: /app
   
     - name: go to app dir
-    ansible.builtin.command: cd /app
+      ansible.builtin.command: cd /app
 
     - name: installing npm dependencies
       ansible.builtin.command: npm install
