@@ -1,6 +1,12 @@
 - name: configuring backend server
   hosts: backend
   vars:
+    login_user: root
+    login_host: db.avinexpense.online
+  vars_prompt:
+  - name: mysql_root_passwd
+    prompt: please enter password
+    private: no 
   become: yes
   tasks:
   - name: disabiling nodejs
@@ -62,6 +68,9 @@
 
   - name: loading mysql schema
     community.mysql.mysql_db:
+      login_user: "{{login_user}}"
+      login_password: "{{mysql_root_passwd}}"
+      login_host: "{{login_host}}" 
       state: import
       name: all
       target: /app/schema/backend.sql
