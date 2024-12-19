@@ -1,0 +1,27 @@
+- name: configuring mysql server
+  hosts: db
+  vars:
+    login_host: db
+  vars_prompt:
+  - name: mysql_root_passwd
+    prompt: please enter your password
+    private: no
+  tasks:
+  - name: installing mysql-server
+    ansible.builtin.dnf:
+      name: mysql-server
+      state: installed
+
+  - name: enabiling and starting mysql service
+    ansible.builtin.service:
+      name: mysql-server
+      state: started
+      enabled: yes
+
+  - name: checking DB connection
+    community.mysql.mysql_info:
+      login_user: root
+      login_password: "{{mysql_root_passwd}}"
+      login_host: "{{login_host}}"
+      
+
