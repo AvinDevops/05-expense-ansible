@@ -42,7 +42,7 @@
     ansible.builtin.command: npm install
     args:
       chdir: /app
-      
+
   - name: copying backend.service to remote
     ansible.builtin.copy:
       src: /home/ec2-user/05-expense-ansible/backend.service
@@ -52,6 +52,13 @@
     ansible.builtin.dnf:
       name: mysql
       state: installed
+  
+  - name: install mysql python dependencies
+    ansible.builtin.pip:
+      name:
+      - PyMySQL
+      - cryptography
+      executable: pip3.9
 
   - name: loading mysql schema
     community.mysql.mysql_db:
